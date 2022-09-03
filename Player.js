@@ -1,7 +1,7 @@
 class Player {
     constructor() {
         this.maxLives = 100
-        this.maxGold = 500000;
+        this.maxGold = 500;
         this.reset();
     }
 
