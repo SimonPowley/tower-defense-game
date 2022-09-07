@@ -224,7 +224,7 @@ class Tower {
         this.projEffect = 0;
         this.projLimit = 1;
         this.color = '#00ff00';
-        this.cost = 550;
+        this.cost = 500;
         this.power = 2;
         this.pierce = 1;
         this.range = 50;
