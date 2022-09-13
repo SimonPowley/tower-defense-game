@@ -61,7 +61,7 @@ class Tower {
         this.cost = 200;
         this.power = 1;
         this.pierce = 1;
-        this.range = 50;
+        this.range = 70;
         this.speed = 1;
         this.info = ['Shoots bullets'];
         // tower upgrade path 1 (u1=upgrade tier 1, u2=upgrade tier 2, etc)
@@ -111,7 +111,7 @@ class Tower {
                 cost: 375,
                 bought: false,
                 buy: function (tower) {
-                    tower.range += 25;
+                    tower.range += 20;
                     tower.value += Math.floor(this.cost / 2);
                     this.bought = true;
                     return tower;}},
@@ -146,7 +146,7 @@ class Tower {
         this.power = 1;
         this.pierce = 2;
         this.range = 75;
-        this.speed = .8;
+        this.speed = .6;
         this.info = ['Shoots bullets', 'in multiple', 'directions'];
         // tower upgrade path 1 (u1=upgrade tier 1, u2=upgrade tier 2, etc)
         this.upgradePath1 = {
@@ -163,7 +163,7 @@ class Tower {
                 cost: 375,
                 bought: false,
                 buy: function (tower) {
-                    tower.pierce += 1;
+                    tower.pierce += 2;
                     tower.value += Math.floor(this.cost / 2)
                     this.bought = true;}},
             u3: {
@@ -173,6 +173,11 @@ class Tower {
                 buy: function (tower) {
                     tower.projType = 'ring';
                     tower.projLimit = 1;
+                    if (tower.speed > .6) {
+                        tower.speed = .7;
+                    } else {
+                        tower.speed -= .1;
+                    }
                     tower.value += Math.floor(this.cost / 2)
                     this.bought = true;}},
             maxed: false
@@ -184,7 +189,7 @@ class Tower {
                 cost: 250,
                 bought: false,
                 buy: function (tower) {
-                    tower.speed += .5;
+                    tower.speed += .2;
                     tower.value += Math.floor(this.cost / 2)
                     this.bought = true;}},
             u2: {
@@ -202,8 +207,8 @@ class Tower {
                 buy: function (tower) {
                     tower.projType = 'laser';
                     tower.projSize += 3;
-                    tower.speed += 1.7;
-                    tower.pierce += 1;
+                    tower.power += 1;
+                    tower.speed = 1.2;
                     tower.value += Math.floor(this.cost / 2)
                     this.bought = true;}},
             maxed: false
@@ -228,7 +233,7 @@ class Tower {
         this.power = 2;
         this.pierce = 1;
         this.range = 50;
-        this.speed = .8;
+        this.speed = .5;
         this.info = ['Shoots bombs', 'that can hit', 'many enemies'];
         // tower upgrade path 1 (u1=upgrade tier 1, u2=upgrade tier 2, etc)
         this.upgradePath1 = {
@@ -266,7 +271,7 @@ class Tower {
                 cost: 250,
                 bought: false,
                 buy: function (tower) {
-                    tower.speed += 1;
+                    tower.speed += .3;
                     tower.value += Math.floor(this.cost / 2)
                     this.bought = true;}},
             u2: {
@@ -382,10 +387,10 @@ class Tower {
         this.blastRadius = 0;
         this.projSize = 3;
         this.projEffect = 0;
-        this.projLimit = 1;
+        this.projLimit = 2;
         this.color = '#ffd700';
         this.cost = 1200;
-        this.power = 1;
+        this.power = 2;
         this.pierce = 2;
         this.range = 100;
         this.speed = 2;
@@ -415,6 +420,8 @@ class Tower {
                 buy: function (tower) {
                     tower.projType = 'reverse';
                     tower.projEffect = 1;
+                    tower.projLimit += 1;
+                    tower.projSize += 1;
                     tower.pierce += 1;
                     tower.value += Math.floor(this.cost / 2)
                     this.bought = true;}},
@@ -435,7 +442,7 @@ class Tower {
                 cost: 375,
                 bought: false,
                 buy: function (tower) {
-                    tower.speed += 1;
+                    tower.speed += .5;
                     tower.value += Math.floor(this.cost / 2)
                     this.bought = true;}},
             u3: {
@@ -445,7 +452,7 @@ class Tower {
                 buy: function (tower) {
                     tower.projType = 'stun';
                     tower.projEffect += 1;
-                    tower.blastRadius += 18;
+                    tower.blastRadius += 12;
                     tower.value += Math.floor(this.cost / 2)
                     this.bought = true;}},
             maxed: false
@@ -759,7 +766,7 @@ class Tower {
 
         // handle tower shooting (except for turret and mine tower)
         if (this.name != 'turret' || this.name != 'mine') {
-            if (this.projectiles.length < this.projLimit && timer - this.lastShot > 60 / this.speed) {
+            if (this.projectiles.length < this.projLimit && timer - this.lastShot > 60 / (this.speed * 2)) {
                 this.shoot(enemies);
                 this.balanceProjectileIds();
                 this.lastShot = timer;
@@ -768,7 +775,7 @@ class Tower {
 
         // handle turret shooting
         if (this.name == 'turret') {
-            if (this.projectiles.length == 0 && timer - this.lastShot > 60 / this.speed) {
+            if (this.projectiles.length == 0 && timer - this.lastShot > 60 / (this.speed * 2)) {
                 this.shoot(enemies);
                 this.lastShot = timer;
             }
@@ -777,7 +784,8 @@ class Tower {
                 this.projectiles[0].update(speed);
                 let inRingRange = [];
                 this.checkRange(enemies, this.center.x, this.center.y, inRingRange, this.projectiles[0].blastRadius);
-                this.hits += this.projectiles[0].ringExpand(inRingRange, speed);
+                this.damage = this.projectiles[0].ringExpand(inRingRange, speed);
+                this.hits += this.damage;
                 // remove projectile if range limit reached
                 if (this.projectiles[0].blastRadius >= this.range) {
                     this.projectiles.splice(0, 1);

@@ -43,8 +43,8 @@ class Projectile {
 
     update(speed) {
         // update projectile location
-        this.pos.x += Math.cos(this.angle) * this.speed * speed;
-        this.pos.y += Math.sin(this.angle) * this.speed * speed;
+        this.pos.x += Math.cos(this.angle) * this.speed * 3 * speed;
+        this.pos.y += Math.sin(this.angle) * this.speed * 3 * speed;
         this.updateSides();
     }
 

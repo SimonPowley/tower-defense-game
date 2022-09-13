@@ -18,6 +18,7 @@ class Game {
         this.mapMenu = config.mapMenu;
 
 
+        // this comment section is kinda weird, but it's for my personal use I guess lol
 
         //// THINGS TO ADD MAYBE
         //// main/home menu, settings menu, game over (win/lose) menu
@@ -29,6 +30,12 @@ class Game {
         // // THINGS TO CHANGE/FIX
         // // changing round speed can mess with enemy positioning, causing weird behavior at corners
         // // reducing enemy size as health decreases can also mess with positioning/corners
+
+        // // IDEA: I think a way to fix the game speed messing up enemy movement would be to change how movement works
+        // // // currently enemy moves 1 pixel (or whatever unit) for each speed point it has, so 1 speed = 1 pixel, 3 speed = 3 pixels
+        // // // maybe instead it can just loop for each speed point and move 1 pixel,
+        // // // and calculate whether it reached its checkpoint after each pixel (no more overshooting corners ??)
+
         // // make laser projectile actually do something interesting/different ? (besides being red)
         // // change attack timing (speed 1 = 1 attack per second, etc ?)
         // // or maybe just make projectiles move faster so they don't miss as much ?
@@ -89,7 +96,7 @@ class Game {
         this.canvas.shop.init(this.canvas);
         this.canvas.info.init();
         this.canvas.path.init(this.canvas);
-        this.canvas.round.init(10);
+        this.canvas.round.init(1);
 
         // start game
         this.runGame();
