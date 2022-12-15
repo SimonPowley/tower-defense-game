@@ -87,10 +87,10 @@ class Game {
 
         // game settings button (change map/exit game, auto start rounds, sound on/off, etc.)
         // ***** NOT FINISHED YET *****
-        this.canvas.settingsButton = {
-            pos: {x: 5, y: 30},
-            size: {width: 50, height: 15}
-        }
+        // this.canvas.settingsButton = {
+        //     pos: {x: 5, y: 30},
+        //     size: {width: 50, height: 15}
+        // }
 
         // initialize anything that needs to be
         this.canvas.shop.init(this.canvas);
@@ -245,12 +245,12 @@ class Game {
         this.ctx.fillText('1x', this.canvas.speed1Button.pos.x, this.canvas.speed1Button.size.height);
         this.ctx.fillText('2x', this.canvas.speed2Button.pos.x, this.canvas.speed2Button.size.height);
 
-        // draw settings menu button
-        this.ctx.fillStyle = 'white';
-        this.ctx.fillRect(this.canvas.settingsButton.pos.x, this.canvas.settingsButton.pos.y, this.canvas.settingsButton.size.width, this.canvas.settingsButton.size.height);
-        this.ctx.font = 'bold 12px Arial';
-        this.ctx.fillStyle = 'black';
-        this.ctx.fillText('Settings', this.canvas.settingsButton.pos.x, this.canvas.settingsButton.pos.y + 12);
+        // // draw settings menu button
+        // this.ctx.fillStyle = 'white';
+        // this.ctx.fillRect(this.canvas.settingsButton.pos.x, this.canvas.settingsButton.pos.y, this.canvas.settingsButton.size.width, this.canvas.settingsButton.size.height);
+        // this.ctx.font = 'bold 12px Arial';
+        // this.ctx.fillStyle = 'black';
+        // this.ctx.fillText('Settings', this.canvas.settingsButton.pos.x, this.canvas.settingsButton.pos.y + 12);
 
         // draw selected tower from shop
         if (this.canvas.player.selected != undefined && !this.canvas.player.selected.bought) {
@@ -331,7 +331,7 @@ class Game {
                 }
             }
 
-            // place and purchase tower (no collision/invalid placement)
+            // attempt to place and purchase tower (no collision/invalid placement)
             if (this.player.selected.canPlace) {
                 this.player.buyTower();
                 return;

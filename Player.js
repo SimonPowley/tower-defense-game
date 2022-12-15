@@ -59,6 +59,8 @@ class Player {
             this.removeGold(this.selected.cost);
             this.addTower();
             this.selected = undefined;
+        } else {
+            this.selected.canPlace = false;
         }
     }
 
